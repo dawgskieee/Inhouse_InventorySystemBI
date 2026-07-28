@@ -1,28 +1,29 @@
 import Image from "next/image";
 import styles from "./landing.module.css";
-
+import logo1 from "../../../public/logo1.png";
 export default function LandingPage() {
   return (
     <main className={styles.container}>
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
           <Image
-            src="/logo1.png"
-            alt="logo"
-            width={120}
-            height={100}
-          />
+          src={logo1}
+          alt="Logo"
+          width={200}
+          height={80}
+          loading="eager"
+/>
         </div>
 
         <nav>
 
           <div className={styles.menu}>
             <Image
-              src="/a1.png"
+              src={logo1}
               alt=""
               width={35}
               height={35}
-            />
+            />  
             Dashboard
           </div>
 
