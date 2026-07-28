@@ -19,7 +19,7 @@ export default function LandingPage() {
 
           <div className={styles.menu}>
             <Image
-              src={logo1}
+              src="/a1.png"
               alt=""
               width={35}
               height={35}
