@@ -1,0 +1,93 @@
+
+.background {
+  width: 100%;
+  min-height: 100vh; 
+  background: linear-gradient(to bottom, #58a8ef, #2f4e69);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 380px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.title {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 300;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+.logoBox {
+  height: 140px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.inputGroup label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.inputGroup input {
+  height: 42px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  background: #5aa2e2;
+  color: white;
+  padding: 0 12px;
+  font-size: 15px;
+}
+
+.inputGroup input::placeholder {
+  color: #e5e5e5;
+}
+
+.loginBtn {
+  width: 100%;
+  height: 42px;
+  border: none;
+  background: #4d97d8;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.loginBtn:hover {
+  background: #2f7ec8;
+}
+
+.signup {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.signup a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.signup a:hover {
+  text-decoration: underline;
+}
