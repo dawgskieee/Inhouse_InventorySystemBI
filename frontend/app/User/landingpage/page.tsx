@@ -1,122 +1,171 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 import styles from "./landing.module.css";
-import logo1 from "../../../public/logo1.png";
-export default function LandingPage() {
+import Sidebar from "../components/sidebar";
+import Navbar from "../components/navbar";
+import Cards from "../components/cards";
+export default function Home() {
+  const [open, setOpen] = useState(false);
+
   return (
-    <main className={styles.container}>
-      <aside className={styles.sidebar}>
-        <div className={styles.logo}>
-          <Image
-          src={logo1}
-          alt="Logo"
-          width={200}
-          height={80}
-          loading="eager"
-/>
-        </div>
+    <div className={styles.wrapper}>
+      <Sidebar />
 
-        <nav>
 
-          <div className={styles.menu}>
-            <Image
-              src="/a1.png"
-              alt=""
-              width={35}
-              height={35}
-            />  
-            Dashboard
+      {}
+
+      <div
+        className={`${styles.content} ${
+          open ? styles.contentFull : ""
+        }`}
+      >
+        {}
+
+        <Navbar />
+      </div>
+    
+
+        {/* BODY */}
+
+        <main className={styles.main}>
+          <div className={styles.breadcrumb}>
+            Home / Dashboard
           </div>
 
-          <div className={styles.menu}>
-            <Image
-              src="/a2.png"
-              alt=""
-              width={35}
-              height={35}
-            />
-            Inventory
+          <h1 className={styles.title}>DASHBOARD</h1>
+
+          {/* ================= CARDS ================= */}
+
+          <Cards />
+
+          {/* ================= CHARTS ================= */}
+
+          <div className={styles.chartSection}>
+            <div className={styles.chart}>
+              <h2>Stock Level Trend</h2>
+
+              <p style={{ color: "#7d8dab", marginTop: 5 }}>
+                Total units across all categories
+              </p>
+
+              <div
+                style={{
+                  height: 230,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#a0aec0",
+                  fontSize: 18,
+                }}
+              >
+                📈 Chart Area
+              </div>
+            </div>
+
+            <div className={styles.chart}>
+              <h2>Units by Category</h2>
+
+              <p style={{ color: "#7d8dab", marginTop: 5 }}>
+                Current stock distribution
+              </p>
+
+              <div
+                style={{
+                  height: 230,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  color: "#a0aec0",
+                  fontSize: 18,
+                }}
+              >
+                📊 Bar Chart
+              </div>
+            </div>
           </div>
 
-          <div className={styles.menu}>
-            <Image
-              src="/a3.png"
-              alt=""
-              width={35}
-              height={35}
-            />
-            Transactions
+          {/* ================= TABLE ================= */}
+
+          <div className={styles.tableCard}>
+            <div className={styles.tableTitle}>
+              <h2>Recent Items</h2>
+
+              <a href="#">View all</a>
+            </div>
+
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Stock</th>
+                  <th>Status</th>
+                  <th>Updated</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>EL-4820-A</td>
+                  <td>Intel Core i7-12700K</td>
+                  <td>Electronics</td>
+                  <td>47</td>
+                  <td>
+                    <span className={styles.badge}>
+                      In Stock
+                    </span>
+                  </td>
+                  <td>2026-07-28</td>
+                </tr>
+
+                <tr>
+                  <td>EL-3310-B</td>
+                  <td>Samsung 32GB DDR5 RAM</td>
+                  <td>Electronics</td>
+                  <td>8</td>
+                  <td>
+                    <span
+                      className={`${styles.badge} ${styles.low}`}
+                    >
+                      Low Stock
+                    </span>
+                  </td>
+                  <td>2026-07-27</td>
+                </tr>
+
+                <tr>
+                  <td>HW-4400</td>
+                  <td>Wireless Mouse</td>
+                  <td>Hardware</td>
+                  <td>0</td>
+                  <td>
+                    <span
+                      className={`${styles.badge} ${styles.out}`}
+                    >
+                      Out of Stock
+                    </span>
+                  </td>
+                  <td>2026-07-25</td>
+                </tr>
+
+                <tr>
+                  <td>PK-001</td>
+                  <td>Packaging Tape</td>
+                  <td>Packaging</td>
+                  <td>150</td>
+                  <td>
+                    <span className={styles.badge}>
+                      In Stock
+                    </span>
+                  </td>
+                  <td>2026-07-21</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-          <div className={styles.menu}>
-            <Image
-              src="/a4.png"
-              alt=""
-              width={35}
-              height={35}
-            />
-            Users
-          </div>
-
-          <div className={styles.menu}>
-            <Image
-              src="/a5.png"
-              alt=""
-              width={35}
-              height={35}
-            />
-            Logs
-          </div>
-
-        </nav>
-      </aside>
-
-      <section className={styles.content}>
-
-        <header className={styles.header}>
-
-          <input
-            type="text"
-            placeholder="Search..."
-          />
-
-          <div className={styles.user}>
-            <div className={styles.avatar}></div>
-            Regie
-          </div>
-
-        </header>
-
-        <div className={styles.topBar}>
-          <button>+ Dashboard</button>
-        </div>
-
-        <div className={styles.cards}>
-
-          <div className={styles.card}>
-            Total Items
-          </div>
-
-          <div className={styles.card}>
-            Low Stock
-          </div>
-
-          <div className={styles.card}>
-            Out of Stock
-          </div>
-
-          <div className={styles.card}>
-            Total Value
-          </div>
-
-        </div>
-
-        <div className={styles.panel}>
-          Recent Items
-        </div>
-
-        <div className={styles.panel}></div>
-
-      </section>
-    </main>
+        </main>
+      </div>
   );
 }
