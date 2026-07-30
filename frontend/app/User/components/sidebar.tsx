@@ -1,13 +1,17 @@
-"use client" 
-import { useState } from "react";
+"use client";
+
 import styles from "../landingpage/landing.module.css";
-export default function Sidebar() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-    return (
+
+type Props = {
+sidebarOpen: boolean;
+};
+
+export default function Sidebar({ sidebarOpen }: Props) {
+return (
     <aside
-        className={`${styles.sidebar} ${
-            sidebarOpen ? styles.sidebarOpen : ""
-        }`}
+    className={`${styles.sidebar} ${
+        sidebarOpen ? styles.sidebarOpen : ""
+    }`}
     >
         <div className={styles.logo}>
         <div className={styles.logoIcon}>📋</div>

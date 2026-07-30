@@ -1,56 +1,60 @@
 "use client";
-import { useState } from "react";
+
 import styles from "../landingpage/landing.module.css";
-export default function Navbar() {
-    const [open, setOpen] = useState(false);
 
-    return (
-        
-        <nav className={styles.navbar}>
+type Props = {
+sidebarOpen: boolean;
+setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Navbar({
+sidebarOpen,
+setSidebarOpen,
+}: Props) {
+return (
+    <nav className={styles.navbar}>
     <div className={styles.leftNav}>
-            <div
-            onClick={() => setOpen(!open)}
-            className={`${styles.hamburger} ${
-                open ? styles.open : ""
-            }`}
-            >
-            <span></span>
-            </div>
+        <button
+        className={styles.hamburger}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        >
+        ☰
+        </button>
 
-            <div style={{ position: "relative" }}>
-            <span
+        <div style={{ position: "relative" }}>
+        <span
             style={{
-                position: "absolute",
-                left: 12,
-                top: 10,
-                color: "white",
-                fontSize: 18,
-                }}
-                >🔍
-                </span>
+            position: "absolute",
+            left: 12,
+            top: 11,
+            color: "#64748b",
+            fontSize: 18,
+            }}
+        >
+            🔍
+        </span>
 
-            <input
-                className={styles.search}
-                placeholder="Search..."
-                style={{ paddingLeft: 38 }}
-            />
-            </div>
+        <input
+            className={styles.search}
+            placeholder="Search..."
+            style={{ paddingLeft: 40 }}
+        />
         </div>
+    </div>
 
-        <div className={styles.rightNav}>
-            <span style={{ fontSize: 20 }}>🔔</span>
+    <div className={styles.rightNav}>
+        <button className={styles.iconBtn}>🔔</button>
 
-            <span style={{ fontSize: 20 }}>🔄</span>
+        <button className={styles.iconBtn}>↻</button>
 
-            <div className={styles.userCircle}>RM</div>
+        <div className={styles.userCircle}>RM</div>
 
-            <strong>Regie</strong>
+        <strong>Regie</strong>
 
-            <button className={styles.dashboardBtn}>
-            +
-            &nbsp; Dashboard
-            </button>
-        </div>
-        </nav>
+        <button className={styles.dashboardBtn}>
+        + Dashboard
+        </button>
+    </div>
+    </nav>
 );
 }

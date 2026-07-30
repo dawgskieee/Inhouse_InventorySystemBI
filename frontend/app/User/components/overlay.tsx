@@ -1,18 +1,22 @@
-"use client";
-import { useState } from "react";
-import styles from "../landingpage/landing.module.css";
-export default function Overlay() {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-return(
 
-    <div className={styles.container}>
-    {}
+import styles from "../landingpage/landing.module.css";
+"use client";
+
+type OverlayProps = {
+sidebarOpen: boolean;
+setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Overlay({
+sidebarOpen,
+setSidebarOpen,
+}: OverlayProps) {
+return (
     <div
-        className={`${styles.overlay} ${
+    className={`${styles.overlay} ${
         sidebarOpen ? styles.overlayShow : ""
-        }`}
-        onClick={() => setSidebarOpen(false)}
+    }`}
+    onClick={() => setSidebarOpen(false)}
     />
-    </div>
 );
 }

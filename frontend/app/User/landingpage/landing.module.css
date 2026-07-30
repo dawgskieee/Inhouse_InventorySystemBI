@@ -114,7 +114,7 @@ MAIN
   flex-direction: column;
 }
 
-.header {
+.navbar {
   height: 82px;
   background: white;
   display: flex;
@@ -137,10 +137,15 @@ MAIN
   border-color: #2563eb;
 }
 
-.rightHeader {
+.rightNav {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+.leftNav{
+    display:flex;
+    align-items:center;
+    gap:18px;
 }
 
 .iconBtn {
@@ -443,17 +448,17 @@ color: #b91c1c;
 background: #fee2e2;
 }
 
-/* ===========================
-HAMBURGER
-=========================== */
 
-.hamburger {
-display: none;
-width: 46px;
-height: 46px;
-border-radius: 10px;
-background: #eff4fb;
-font-size: 24px;
+
+.hamburger{
+  width:44px;
+  height:44px;
+  border-radius:10px;
+  background:#f1f5f9;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
 }
 
 .overlay {
@@ -508,7 +513,7 @@ RESPONSIVE
     align-items: center;
 }
 
-.header {
+.navbar {
     padding: 18px;
     gap: 14px;
 }
@@ -517,7 +522,7 @@ RESPONSIVE
     width: 100%;
 }
 
-.rightHeader {
+.rightNav {
     margin-left: auto;
 }
 
@@ -541,7 +546,7 @@ RESPONSIVE
     padding: 20px;
 }
 
-.header {
+.navbar {
     flex-wrap: wrap;
     height: auto;
     padding: 16px;
