@@ -1,7 +1,5 @@
 "use client";
-
 import styles from "../landingpage/landing.module.css";
-
 type Props = {
 sidebarOpen: boolean;
 };
@@ -18,7 +16,7 @@ return (
 
         <div>
             <h2>IT INVENTORY</h2>
-            <span>v2.4.1</span>
+            <span>Beyond Innovations</span>
         </div>
         </div>
 
