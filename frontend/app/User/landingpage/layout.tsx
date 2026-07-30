@@ -6,14 +6,10 @@ export const metadata: Metadata = {
   description: "Inventory Management Dashboard",
 };
 
-export default function RootLayout({
+export default function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
-}
+  return <>{children}</>;
+}
