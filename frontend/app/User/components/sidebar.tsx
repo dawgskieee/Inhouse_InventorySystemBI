@@ -1,54 +1,58 @@
+"use client" 
 import { useState } from "react";
 import styles from "../landingpage/landing.module.css";
 export default function Sidebar() {
-    const [open, setOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
     <aside
         className={`${styles.sidebar} ${
-open ? styles.showSidebar : styles.sidebarClosed
+            sidebarOpen ? styles.sidebarOpen : ""
         }`}
->
+    >
         <div className={styles.logo}>
-    IT INVENTORY
-        <span className={styles.version}>v2.4.1</span>
+        <div className={styles.logoIcon}>📋</div>
+
+        <div>
+            <h2>IT INVENTORY</h2>
+            <span>v2.4.1</span>
+        </div>
         </div>
 
-        <div className={styles.menu}>
-        <div className={`${styles.menuItem} ${styles.active}`}>
-            <span>📊</span>
+        <nav className={styles.nav}>
+        <a className={`${styles.navItem} ${styles.active}`}>
+            <span>▦</span>
             Dashboard
-        </div>
+        </a>
 
-        <div className={styles.menuItem}>
+        <a className={styles.navItem}>
             <span>📦</span>
             Inventory
-        </div>
+        </a>
 
-        <div className={styles.menuItem}>
-            <span>🔄</span>
+        <a className={styles.navItem}>
+            <span>⇄</span>
             Transactions
-        </div>
+        </a>
 
-        <div className={styles.menuItem}>
+        <a className={styles.navItem}>
             <span>👥</span>
             Users
-        </div>
+        </a>
 
-        <div className={styles.menuItem}>
-            <span>📄</span>
+        <a className={styles.navItem}>
+            <span>📝</span>
             Logs
-        </div>
-        </div>
+        </a>
+        </nav>
 
-        <div className={styles.bottomUser}>
+        <div className={styles.profile}>
         <div className={styles.avatar}>RM</div>
 
         <div>
             <strong>Regie Morales</strong>
-            <br />
-            <small>Administrator</small>
+            <span>Administrator</span>
         </div>
         </div>
-</aside>
-);
+    </aside>
+    );
 }

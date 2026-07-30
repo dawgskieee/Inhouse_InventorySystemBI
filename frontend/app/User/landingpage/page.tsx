@@ -1,29 +1,28 @@
 "use client";
-
 import { useState } from "react";
 import styles from "./landing.module.css";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 import Cards from "../components/cards";
-import Body from "../components/body";
 import Table from "../components/table";
-
+import Charts from "../components/charts";
+import Page from "../components/page";
+import Header from "../components/header";
+import Overlay from "../components/overlay";
+import Main from "../components/main";
 export default function Home() {
-  const [open, setOpen] = useState(false);
-
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.container}>
+      <Overlay />
       <Sidebar />
-      <div
-        className={`${styles.content} ${
-          open ? styles.contentFull : ""
-        }`}
-      >
+      <Main />
+      <Header />
       <Navbar />
-      </div>
-      <Body />
+      <Page />
       <Cards />
+      <Charts />
       <Table />
-      </div>
+    </div>
   );
 }

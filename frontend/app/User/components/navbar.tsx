@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import styles from "../landingpage/landing.module.css";
 export default function Navbar() {

@@ -1,74 +1,57 @@
+"use client";
 import { useState } from "react";
-import styles from "../landingpage/landing.module.css";
+import styles from "./landing.module.css";
 export default function Cards() {
-    const [open, setOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     return (
 <div className={styles.cards}>
+            <div className={styles.card}>
+            <div>
+                <small>TOTAL ITEMS</small>
 
-<div className={styles.card}>
-    <div className={styles.cardLabel}>TOTAL ITEMS</div>
-    <div className={styles.cardValue}>12</div>
-    <div className={styles.cardFooter}>+3 added this week</div>
+                <h2>12</h2>
 
-    <div
-    style={{
-        float: "right",
-        marginTop: -85,
-        fontSize: 38,
-    }}
-    >
-    💻
-    </div>
-</div>
+                <p>↗ +3 added this week</p>
+            </div>
 
-<div className={styles.card}>
-    <div className={styles.cardLabel}>LOW STOCK</div>
-    <div className={styles.cardValue}>4</div>
-    <div className={styles.cardFooter}>4 SKUs below threshold</div>
+            <div className={styles.cardIcon}>📚</div>
+            </div>
 
-    <div
-    style={{
-        float: "right",
-        marginTop: -85,
-        fontSize: 38,
-    }}
-    >
-    ⚠️
-    </div>
-</div>
+            <div className={styles.card}>
+            <div>
+                <small>LOW STOCK</small>
 
-<div className={styles.card}>
-    <div className={styles.cardLabel}>OUT OF STOCK</div>
-    <div className={styles.cardValue}>1</div>
-    <div className={styles.cardFooter}>Requires restock</div>
+                <h2>4</h2>
 
-    <div
-    style={{
-        float: "right",
-        marginTop: -85,
-        fontSize: 38,
-    }}
-    >
-    ❌
-    </div>
-</div>
+                <p>4 SKUs below threshold</p>
+            </div>
 
-<div className={styles.card}>
-    <div className={styles.cardLabel}>TOTAL VALUE</div>
-    <div className={styles.cardValue}>$27.9K</div>
-    <div className={styles.cardFooter}>+$2.1K vs last week</div>
+            <div className={styles.yellow}>⚠</div>
+            </div>
 
-    <div
-    style={{
-        float: "right",
-        marginTop: -85,
-        fontSize: 38,
-    }}
-    >
-    💰
-    </div>
-</div>
+            <div className={styles.card}>
+            <div>
+                <small>OUT OF STOCK</small>
 
-</div>
+                <h2>1</h2>
+
+                <p>Requires immediate restock</p>
+            </div>
+
+            <div className={styles.red}>✕</div>
+            </div>
+
+            <div className={styles.card}>
+            <div>
+                <small>TOTAL VALUE</small>
+
+                <h2>$27.9K</h2>
+
+                <p>+$2.1K vs last week</p>
+            </div>
+
+            <div className={styles.green}>$</div>
+            </div>
+        </div>
     );
 }

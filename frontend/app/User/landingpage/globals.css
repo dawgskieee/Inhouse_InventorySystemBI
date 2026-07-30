@@ -1,48 +1,57 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html,
-body{
-  width:100%;
-  height:100%;
+body {
+  width: 100%;
+  min-height: 100%;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  background: #f4f7fb;
+  color: #1e293b;
 }
 
-body{
-  font-family:Inter,Segoe UI,sans-serif;
-  background:#eef2f7;
-  color:#1d2b4f;
+body {
+  overflow-x: hidden;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-button{
-  border:none;
-  outline:none;
-  cursor:pointer;
-  font-family:inherit;
+button,
+input {
+  font: inherit;
 }
 
-input{
-  outline:none;
-  border:none;
-  font-family:inherit;
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
 }
 
-::-webkit-scrollbar{
-  width:8px;
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-::-webkit-scrollbar-thumb{
-  background:#b7c4d8;
-  border-radius:20px;
+th,
+td {
+  text-align: left;
 }
 
-::-webkit-scrollbar-track{
-  background:transparent;
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9d2df;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
