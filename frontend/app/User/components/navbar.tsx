@@ -54,6 +54,10 @@ return (
         <button className={styles.dashboardBtn}>
         + Dashboard
         </button>
+
+        <button className={styles.logoutBtn}>
+            Logout
+        </button>
     </div>
     </nav>
 );

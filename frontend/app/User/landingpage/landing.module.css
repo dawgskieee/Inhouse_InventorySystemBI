@@ -69,6 +69,21 @@ SIDEBAR
   background: #edf3ff;
 }
 
+.logoutBtn{
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.logoutBtn:hover{
+    background: #dc2626;
+}
+
 .active {
   background: #2563eb;
   color: white;
