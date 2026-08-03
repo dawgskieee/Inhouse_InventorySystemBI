@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import styles from "../landingpage/landing.module.css";
 
 const employees = [
@@ -30,128 +31,146 @@ const employees = [
 ];
 
 export default function HeadOffice() {
+const [department, setDepartment] = useState("All Departments");
 
-const total = employees.length;
-const active = employees.filter(e => e.status === "Active").length;
+  // Filter employees
+const filteredEmployees =
+    department === "All Departments"
+    ? employees
+    : employees.filter(
+        (employee) => employee.department === department
+        );
+
+  // Dynamic counts
+const total = filteredEmployees.length;
+const active = filteredEmployees.filter(
+    (e) => e.status === "Active"
+).length;
+const laptops = filteredEmployees.filter(
+    (e) => e.device === "Laptop"
+).length;
+const tablets = filteredEmployees.filter(
+    (e) => e.device === "Tablet"
+).length;
 
 return (
+    <section className={styles.page}>
+    <div className={styles.pageHeader}>
+        <div>
+        <h1>Head Office Inventory</h1>
+        <p>Manage and monitor all Head Office assets.</p>
+        </div>
+    </div>
+
+      {/* FILTER */}
+    <div className={styles.filterContainer}>
+        <div className={styles.filterGroup}>
+        <label>Department</label>
+
+        <select
+            className={styles.filterSelect}
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
+        >
+            <option>All Departments</option>
+            <option>Executive</option>
+            <option>Accounting</option>
+            <option>Human Resources</option>
+            <option>Information Technology</option>
+            <option>Sales</option>
+            <option>Marketing</option>
+            <option>Operations</option>
+            <option>Administration</option>
+        </select>
+        </div>
+    </div>
 
     <section className={styles.inventoryContent}>
-
-    <div className={styles.inventoryHeader}>
+        <div className={styles.inventoryHeader}>
         <h1>Head Office Inventory</h1>
         <p>Beyond Innovations Inc.</p>
-    </div>
+        </div>
 
-    <div className={styles.inventoryCards}>
-
+        {/* Cards */}
+        <div className={styles.inventoryCards}>
         <div className={styles.inventoryCard}>
-        <small>Total Assets</small>
-        <h2>{total}</h2>
+            <small>Total Assets</small>
+            <h2>{total}</h2>
         </div>
 
         <div className={styles.inventoryCard}>
-        <small>Active</small>
-        <h2 className={styles.green}>{active}</h2>
+            <small>Active</small>
+            <h2 className={styles.green}>{active}</h2>
         </div>
 
         <div className={styles.inventoryCard}>
-        <small>Laptops</small>
-        <h2>1</h2>
+            <small>Laptops</small>
+            <h2>{laptops}</h2>
         </div>
 
         <div className={styles.inventoryCard}>
-        <small>Tablets</small>
-        <h2>1</h2>
+            <small>Tablets</small>
+            <h2>{tablets}</h2>
+        </div>
         </div>
 
-    </div>
-
-    <div className={styles.inventoryTableCard}>
-
+        {/* Table */}
+        <div className={styles.inventoryTableCard}>
         <table className={styles.inventoryTable}>
-
-        <thead>
-
+            <thead>
             <tr>
-
-            <th>User</th>
-
-            <th>Department</th>
-
-            <th>Device</th>
-
-            <th>Brand</th>
-
-            <th>Model</th>
-
-            <th>Processor</th>
-
-            <th>Storage</th>
-
-            <th>Memory</th>
-
-            <th>Serial Number</th>
-
-            <th>Status</th>
-
-            <th>Action</th>
-
+                <th>User</th>
+                <th>Department</th>
+                <th>Device</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Processor</th>
+                <th>Storage</th>
+                <th>Memory</th>
+                <th>Serial Number</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
+            </thead>
 
-        </thead>
+            <tbody>
+                {filteredEmployees.length > 0 ? (
+                filteredEmployees.map((item, index) => (
+                <tr key={index}>
+                    <td>{item.user}</td>
+                    <td>{item.department}</td>
+                    <td>{item.device}</td>
+                    <td>{item.brand}</td>
+                    <td>{item.model}</td>
+                    <td>{item.processor}</td>
+                    <td>{item.storage}</td>
+                    <td>{item.memory}</td>
+                    <td>{item.serial}</td>
 
-        <tbody>
+                    <td>
+                    <span className={styles.activeBadge}>
+                        {item.status}
+                    </span>
+                    </td>
 
-            {employees.map((item,index)=>(
-
-            <tr key={index}>
-
-                <td>{item.user}</td>
-
-                <td>{item.department}</td>
-
-                <td>{item.device}</td>
-
-                <td>{item.brand}</td>
-
-                <td>{item.model}</td>
-
-                <td>{item.processor}</td>
-
-                <td>{item.storage}</td>
-
-                <td>{item.memory}</td>
-
-                <td>{item.serial}</td>
-
-                <td>
-
-                <span className={styles.activeBadge}>
-                    {item.status}
-                </span>
-
+                    <td>
+                    <button className={styles.editBtn}>
+                        Edit
+                    </button>
+                    </td>
+                </tr>
+                ))
+            ) : (
+                <tr>
+                <td colSpan={11} style={{ textAlign: "center", padding: "20px" }}>
+                    No records found.
                 </td>
-
-                <td>
-
-                <button className={styles.editBtn}>
-                    Edit
-                </button>
-
-                </td>
-
-            </tr>
-
-            ))}
-
-        </tbody>
-
+                </tr>
+            )}
+            </tbody>
         </table>
-
-    </div>
-
+        </div>
     </section>
-
+    </section>
 );
 }
