@@ -1,4 +1,4 @@
-
+"use client";
 import styles from "../landingpage/landing.module.css";
 "use client";
 

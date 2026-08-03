@@ -1,14 +1,23 @@
 "use client";
+import { useState } from "react";
 import styles from "../landingpage/landing.module.css";
 type Props = {
 sidebarOpen: boolean;
+setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+currentPage: string;
+setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Sidebar({ sidebarOpen }: Props) {
+export default function Sidebar({
+sidebarOpen,
+currentPage,
+setCurrentPage,
+}: Props) {
+    const [inventoryOpen, setInventoryOpen] = useState(false);
 return (
     <aside
     className={`${styles.sidebar} ${
-        sidebarOpen ? styles.sidebarOpen : ""
+        sidebarOpen ? styles.sidebarOpen :  styles.sidebarClose
     }`}
     >
         <div className={styles.logo}>
@@ -21,15 +30,66 @@ return (
         </div>
 
         <nav className={styles.nav}>
-        <a className={`${styles.navItem} ${styles.active}`}>
-            <span>▦</span>
-            Dashboard
-        </a>
+        <div
+        className={`${styles.navItem} ${
+            currentPage === "dashboard" ? styles.active : ""
+        }`}
+        onClick={() => setCurrentPage("dashboard")}
+        ><span>▦</span>Dashboard
+            </div>
 
-        <a className={styles.navItem}>
-            <span>📦</span>
-            Inventory
-        </a>
+        <div className={styles.menuGroup}>
+            <div className={styles.menuRow}>
+
+    {/* Inventory */}
+    <div
+    className={`${styles.navItem} ${
+        currentPage === "inventory" ? styles.active : ""
+    }`}
+    onClick={() => setCurrentPage("inventory")}
+    >
+    <span>📦</span>
+    Inventory
+    </div>
+
+    {/* Dropdown */}
+    <button
+    type="button"
+    className={styles.dropdownBtn}
+    onClick={() => setInventoryOpen(!inventoryOpen)}
+    >
+    {inventoryOpen ? "▲" : "▼"}
+    </button>
+
+</div>
+
+{inventoryOpen && (
+
+    <div className={styles.subMenu}>
+
+    <div
+        className={`${styles.subMenuItem} ${
+        currentPage === "headOffice" ? styles.active : ""
+        }`}
+        onClick={() => setCurrentPage("headOffice")}
+    >
+        Head Office
+</div>
+
+    <div
+        className={`${styles.subMenuItem} ${
+        currentPage === "store" ? styles.active : ""
+        }`}
+        onClick={() => setCurrentPage("store")}
+    >
+        Store Inventory
+    </div>
+
+    </div>
+
+)}
+
+</div>
 
         <a className={styles.navItem}>
             <span>⇄</span>

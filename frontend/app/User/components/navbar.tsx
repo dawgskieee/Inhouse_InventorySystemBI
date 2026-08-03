@@ -15,7 +15,7 @@ return (
     <nav className={styles.navbar}>
     <div className={styles.leftNav}>
         <button
-        className={styles.hamburger}
+        className={styles.hamburger}    
         onClick={() => setSidebarOpen(!sidebarOpen)}
         >
         ☰
@@ -36,29 +36,24 @@ return (
 
         <input
             className={styles.search}
-            placeholder="Search..."
+            placeholder="Search name,asset or serial number"
             style={{ paddingLeft: 40 }}
         />
         </div>
     </div>
-
     <div className={styles.rightNav}>
-        <button className={styles.iconBtn}>🔔</button>
-
-        <button className={styles.iconBtn}>↻</button>
-
-        <div className={styles.userCircle}>RM</div>
-
-        <strong>Regie</strong>
-
-        <button className={styles.dashboardBtn}>
-        + Dashboard
+        <button className={styles.exportBtn}>
+    ⬇ Export to Excel
+    </button>
+    <button className={styles.newAssetBtn}>
+        + New Asset
         </button>
-
-        <button className={styles.logoutBtn}>
-            Logout
-        </button>
-    </div>
-    </nav>
+        <div className={styles.userMenu}>
+            <button className={styles.userButton}>
+                Regie ▾
+                </button>
+                </div>
+                </div>
+                </nav>
 );
 }

@@ -1,13 +1,16 @@
 "use client";
 import Image from "next/image";
 import styles from "./login.module.css";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
+  
   return (
     <div className={styles.container}>
       <div className={styles.background}>
         <div className={styles.card}>
-          <h1 className={styles.title}>Login</h1>
+        <h1 className={styles.title}>Login</h1>
 
           <div className={styles.logoBox}>
             <Image
@@ -37,9 +40,9 @@ export default function LoginPage() {
               />
             </div>
 
-            <button type="submit" className={styles.loginBtn}>
+            <button className={styles.loginBtn} type="button" onClick={() => router.push("/User/landingpage")}  >
               LOG IN
-            </button>
+            </button> 
           </form>
 
           <p className={styles.signup}>
