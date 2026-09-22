@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../landingpage/landing.module.css";
+
 type Props = {
 sidebarOpen: boolean;
 setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +15,15 @@ currentPage,
 setCurrentPage,
 }: Props) {
     const [inventoryOpen, setInventoryOpen] = useState(false);
+    const [user, setUser] = useState<{ username: string; role: string } | null>(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
 return (
     <aside
     className={`${styles.sidebar} ${
@@ -108,13 +118,15 @@ return (
         </nav>
 
         <div className={styles.profile}>
-        <div className={styles.avatar}>RM</div>
+  <div className={styles.avatar}>
+    {user?.username ? user.username.slice(0, 2).toUpperCase() : "?"}
+  </div>
 
-        <div>
-            <strong>Regie Morales</strong>
-            <span>Administrator</span>
-        </div>
-        </div>
+  <div>
+    <strong>{user?.username || "Guest"}</strong>
+    <span>{user?.role || "Unknown"}</span>
+  </div>
+  </div>
     </aside>
     );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./landing.module.css";
 
 import Sidebar from "../components/sidebar";
@@ -16,28 +17,44 @@ import StoreInventory from "../components/inventory";
 import HeadOffice from "../components/headoffice";
 
 export default function Home() {
-
+  const router = useRouter();
+  const [checkingAuth, setCheckingAuth] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState("dashboard");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/");
+    } else {
+      setCheckingAuth(false);
+    }
+  }, []);
+
+  if (checkingAuth) {
+    return <p style={{ padding: "40px" }}>Loading...</p>;
+  }
 
   return (
     <div className={styles.container}>
 
       <Sidebar
-      sidebarOpen={sidebarOpen}
-      setSidebarOpen={setSidebarOpen}
-      currentPage={currentPage}
-      setCurrentPage={setCurrentPage}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
 
       <main className={`${styles.main} ${
         sidebarOpen ? styles.mainOpen : styles.mainClosed
-        }`}
->
+      }`}>
 
         <Navbar
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
         />
 
         {currentPage === "dashboard" && (
@@ -45,7 +62,7 @@ export default function Home() {
             <Dashboard />
             <Cards />
             <Charts />
-            <Table />
+            <Table searchTerm={searchTerm} />
           </>
         )}
 

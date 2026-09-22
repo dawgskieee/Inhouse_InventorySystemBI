@@ -1,92 +1,113 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styles from "../landingpage/landing.module.css";
+
+type Item = {
+  category: string;
+  stock: number;
+};
+
+type CategoryTotal = {
+  category: string;
+  totalStock: number;
+};
+
 export default function Charts() {
-    const [open, setOpen] = useState(false);
-    return (
-<div className={styles.chartGrid}>
-            <div className={styles.chartCard}>
-            <div className={styles.chartHeader}>
-                <div>
-                <h3>Stock Level Trend</h3>
-                <p>Total units across all categories</p>
-                </div>
+  const [categoryData, setCategoryData] = useState<CategoryTotal[]>([]);
+  const [loading, setLoading] = useState(true);
 
-                <button>6M</button>
-            </div>
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/items");
+        const items: Item[] = response.data;
 
-            <div className={styles.fakeChart}>
-                <svg
-                viewBox="0 0 700 250"
-                preserveAspectRatio="none"
-                >
-                <polyline
+        // I-group ang items base sa category, i-sum ang stock ng bawat isa
+        const grouped: Record<string, number> = {};
+        items.forEach((item) => {
+          const cat = item.category || "Uncategorized";
+          grouped[cat] = (grouped[cat] || 0) + item.stock;
+        });
+
+        const result: CategoryTotal[] = Object.entries(grouped).map(
+          ([category, totalStock]) => ({ category, totalStock })
+        );
+
+        setCategoryData(result);
+      } catch (err) {
+        console.error("Failed to fetch chart data:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  // Kunin ang pinakamataas na stock, gagamitin bilang batayan ng taas ng bars
+  const maxStock = Math.max(...categoryData.map((c) => c.totalStock), 1);
+  const barColors = [styles.blue, styles.greenBar, styles.orange, styles.purple];
+
+  return (
+    <div className={styles.chartGrid}>
+      <div className={styles.chartCard}>
+        <div className={styles.chartHeader}>
+          <div>
+            <h3>Stock Level Trend</h3>
+            <p>Total units across all categories</p>
+          </div>
+        </div>
+
+        <div className={styles.fakeChart}>
+          <svg viewBox="0 0 700 250" preserveAspectRatio="none">
+            {categoryData.length > 0 && (() => {
+              // Kwentahin ang mga puntos base sa totoong data
+              const points = categoryData.map((c, i) => {
+                const x = (700 / Math.max(categoryData.length - 1, 1)) * i;
+                const y = 220 - (c.totalStock / maxStock) * 180;
+                return { x, y };
+              });
+              const pointsStr = points.map((p) => `${p.x},${p.y}`).join(" ");
+
+              return (
+                <>
+                  <polyline
                     fill="none"
                     stroke="#3f7cff"
                     strokeWidth="4"
-                    points="
-                    20,110
-                    120,120
-                    230,90
-                    350,125
-                    470,100
-                    620,70
-                "
-                />
-
-                <circle cx="20" cy="110" r="6" fill="#3f7cff" />
-                <circle cx="120" cy="120" r="6" fill="#3f7cff" />
-                <circle cx="230" cy="90" r="6" fill="#3f7cff" />
-                <circle cx="350" cy="125" r="6" fill="#3f7cff" />
-                <circle cx="470" cy="100" r="6" fill="#3f7cff" />
-                <circle cx="620" cy="70" r="6" fill="#3f7cff" />
-                </svg>
-            </div>
-            </div>
-
-            <div className={styles.chartCard}>
-            <h3>Units by Category</h3>
-
-            <p>Current stock distribution</p>
-
-            <div className={styles.bars}>
-                <div>
-                <span
-                    style={{ height: "180px" }}
-                    className={styles.blue}
-                ></span>
-
-                <small>Electronics</small>
-                </div>
-
-                <div>
-                <span
-                    style={{ height: "120px" }}
-                    className={styles.greenBar}
-                ></span>
-
-                <small>Hardware</small>
-                </div>
-
-                <div>
-                <span
-                style={{ height: "18px" }}
-                    className={styles.orange}
-                ></span>
-
-                <small>Packaging</small>
-                </div>
-
-                <div>
-                <span
-                    style={{ height: "12px" }}
-                    className={styles.purple}
-                ></span>
-
-                <small>Tools</small>
-                </div>
-            </div>
-            </div>
+                    points={pointsStr}
+                  />
+                  {points.map((p, i) => (
+                    <circle key={i} cx={p.x} cy={p.y} r="6" fill="#3f7cff" />
+                  ))}
+                </>
+              );
+            })()}
+          </svg>
         </div>
-    );
+      </div>
+
+      <div className={styles.chartCard}>
+        <h3>Units by Category</h3>
+        <p>Current stock distribution</p>
+
+        {loading ? (
+          <p style={{ padding: "20px" }}>Loading...</p>
+        ) : (
+          <div className={styles.bars}>
+            {categoryData.map((cat, i) => (
+              <div key={cat.category}>
+                <span
+                  style={{ height: `${(cat.totalStock / maxStock) * 200}px` }}
+                  className={barColors[i % barColors.length]}
+                ></span>
+                <small>{cat.category}</small>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
