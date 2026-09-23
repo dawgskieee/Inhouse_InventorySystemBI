@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../../lib/axios";
 import styles from "../landingpage/landing.module.css";
 
 type Asset = {
@@ -27,8 +27,8 @@ export default function StoreInventory() {
 
   const fetchAssets = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/assets?location_type=store"
+      const response = await api.get(
+        "/assets?location_type=store"
       );
       setAssets(response.data);
     } catch (err) {
@@ -56,7 +56,7 @@ export default function StoreInventory() {
     if (!editingAsset) return;
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/assets/${editingAsset.id}`, {
+      await api.put(`/assets/${editingAsset.id}`, {
         asset_tag: editingAsset.asset_tag,
         assigned_to: editingAsset.assigned_to,
         device_type: editingAsset.device_type,
@@ -84,7 +84,7 @@ export default function StoreInventory() {
   const handleDelete = async () => {
     if (deletingId === null) return;
     try {
-      await axios.delete(`http://localhost:5000/assets/${deletingId}`);
+      await api.delete(`/assets/${deletingId}`);
       setShowDeleteModal(false);
       setDeletingId(null);
       fetchAssets();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../../lib/axios";
 import styles from "../landingpage/landing.module.css";
 
 type Item = {
@@ -21,8 +21,8 @@ export default function Cards() {
     const fetchData = async () => {
       try {
         const [itemsRes, assetsRes] = await Promise.all([
-          axios.get("http://localhost:5000/items"),
-          axios.get("http://localhost:5000/assets"),
+          api.get("/items"),
+          api.get("/assets"),
         ]);
 
         const items: Item[] = itemsRes.data;

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import api from "../../../lib/axios";
 import styles from "../landingpage/landing.module.css";
 
 type Props = {
@@ -63,7 +63,7 @@ setSearchTerm,
              setSaving(false);
              return;
            }
-           await axios.post("http://localhost:5000/items", {
+           await api.post("/items", {
              sku,
              name,
              category,
@@ -76,7 +76,7 @@ setSearchTerm,
              setSaving(false);
              return;
            }
-           await axios.post("http://localhost:5000/assets", {
+           await api.post("/assets", {
              asset_tag: assetTag,
              assigned_to: assignedTo,
              device_type: deviceType,

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
+import api from "../lib/axios";
 import styles from "./login.module.css";
 import { useRouter } from "next/navigation";
 
@@ -15,16 +15,16 @@ export default function LoginPage() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      router.push("/User/landingpage"); // may session na, diretso sa dashboard
+      router.push("/User/landingpage"); 
     } else {
-      setCheckingSession(false); // walang session, ipakita ang login form
+      setCheckingSession(false); 
     }
   }, []);
 
   const handleLogin = async () => {
     setError("");
     try {
-      const response = await axios.post("http://localhost:5000/api/login", {
+     const response = await api.post("/api/login", {
         username,
         password,
       });

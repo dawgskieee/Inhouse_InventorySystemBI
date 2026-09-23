@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../../lib/axios";
 import styles from "../landingpage/landing.module.css";
 
 type Item = {
@@ -30,7 +30,7 @@ export default function Table({ searchTerm }: Props) {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/items");
+      const response = await api.get("/items");
       setRecentItems(response.data);
     } catch (err) {
       console.error("Failed to fetch items:", err);
@@ -61,7 +61,7 @@ export default function Table({ searchTerm }: Props) {
     if (!editingItem) return;
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/items/${editingItem.id}`, {
+      await api.put(`/items/${editingItem.id}`, {
         sku: editingItem.sku,
         name: editingItem.name,
         category: editingItem.category,
@@ -86,7 +86,7 @@ export default function Table({ searchTerm }: Props) {
   const handleDelete = async () => {
     if (deletingId === null) return;
     try {
-      await axios.delete(`http://localhost:5000/items/${deletingId}`);
+      await api.delete(`/items/${deletingId}`);
       setShowDeleteModal(false);
       setDeletingId(null);
       fetchItems();

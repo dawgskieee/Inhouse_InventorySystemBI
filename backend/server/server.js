@@ -4,7 +4,7 @@ require("dotenv").config({ path: "./config.env" });
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require("../db/db");
-
+const verifyToken = require("../middleware/auth");
 const app = express();
 
 app.use(cors());
@@ -12,10 +12,10 @@ app.use(express.json());
 
 
 const itemsRoutes = require("../routes/items");
-app.use("/items", itemsRoutes);
+app.use("/items", verifyToken, itemsRoutes);
 
 const assetsRoutes = require("../routes/assets");
-app.use("/assets", assetsRoutes);
+app.use("/assets", verifyToken, assetsRoutes);
 
 
 app.post('/api/login', async (req, res) => {

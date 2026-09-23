@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import axios from "axios";
+import api from "../../lib/axios";
 import styles from "../login.module.css";
 import { useRouter } from "next/navigation";
 

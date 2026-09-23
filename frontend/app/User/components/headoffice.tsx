@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../../lib/axios";
 import styles from "../landingpage/landing.module.css";
 
 type Employee = {
@@ -32,8 +32,8 @@ export default function HeadOffice() {
 
   const fetchAssets = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/assets?location_type=head_office"
+      const response = await api.get(
+        "/assets?location_type=head_office"
       );
       setEmployees(response.data);
     } catch (err) {
@@ -66,7 +66,7 @@ export default function HeadOffice() {
     if (!editingAsset) return;
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5000/assets/${editingAsset.id}`, {
+      await api.put(`/assets/${editingAsset.id}`, {
         asset_tag: (editingAsset as any).asset_tag || null,
         assigned_to: editingAsset.assigned_to,
         device_type: editingAsset.device_type,
@@ -99,7 +99,7 @@ export default function HeadOffice() {
   const handleDelete = async () => {
     if (deletingId === null) return;
     try {
-      await axios.delete(`http://localhost:5000/assets/${deletingId}`);
+      await api.delete(`/assets/${deletingId}`);
       setShowDeleteModal(false);
       setDeletingId(null);
       fetchAssets();

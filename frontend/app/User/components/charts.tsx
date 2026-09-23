@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../../lib/axios";
 import styles from "../landingpage/landing.module.css";
 
 type Item = {
@@ -20,7 +20,7 @@ export default function Charts() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/items");
+        const response = await api.get("/items");
         const items: Item[] = response.data;
 
         // I-group ang items base sa category, i-sum ang stock ng bawat isa
