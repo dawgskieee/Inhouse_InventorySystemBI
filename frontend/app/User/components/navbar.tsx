@@ -53,6 +53,41 @@ setSearchTerm,
        setAddError("");
      };
 
+     const handleExport = async () => {
+  try {
+    const response = await api.get("/items");
+    const items = response.data;
+
+    if (items.length === 0) {
+      alert("No items to export.");
+      return;
+    }
+
+    
+    const headers = Object.keys(items[0]);
+
+    
+    const rows = items.map((item: any) =>
+      headers.map((header) => `"${item[header] ?? ""}"`).join(",")
+    );
+
+    const csvContent = [headers.join(","), ...rows].join("\n");
+
+    
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `items_export_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (err) {
+    console.error("Failed to export items:", err);
+    alert("Failed to export items.");
+  }
+};
+
      const handleAdd = async () => {
        setAddError("");
        setSaving(true);
@@ -121,7 +156,7 @@ return (
 
        <input
     className={styles.search}
-    placeholder="Search name,asset or serial number"
+    placeholder="SKU,Product Name,Category"
     style={{ paddingLeft: 40 }}
     value={searchTerm}
     onChange={(e) => setSearchTerm(e.target.value)}
@@ -129,9 +164,9 @@ return (
         </div>
     </div>
     <div className={styles.rightNav}>
-        <button className={styles.exportBtn}>
-    ⬇ Export to Excel
-    </button>
+        <button className={styles.exportBtn} onClick={handleExport}>
+          ⬇ Export to Excel
+          </button>
     <button className={styles.newAssetBtn} onClick={() => { resetForm(); setShowAddModal(true); }}>
         + New Asset
         </button>
@@ -197,10 +232,17 @@ return (
                             <input value={name} onChange={(e) => setName(e.target.value)}
                               style={{ background: "#f1f5f9", color: "#1e293b", border: "1px solid #dbe3ec" }} />
                           </div>
-                          <div className={styles.inputGroup}>
-                            <label style={{ color: "#334155", textTransform: "none" }}>Category</label>
-                            <input value={category} onChange={(e) => setCategory(e.target.value)}
-                              style={{ background: "#f1f5f9", color: "#1e293b", border: "1px solid #dbe3ec" }} />
+                         <div className={styles.inputGroup}>
+                          <label style={{ color: "#334155", textTransform: "none" }}>Category</label>
+                          <input
+                          value={category}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            const formatted = val.charAt(0).toUpperCase() + val.slice(1);
+                            setCategory(formatted);
+                          }}
+                          style={{ background: "#f1f5f9", color: "#1e293b", border: "1px solid #dbe3ec" }}
+                          />
                           </div>
                           <div className={styles.inputGroup}>
                             <label style={{ color: "#334155", textTransform: "none" }}>Stock</label>

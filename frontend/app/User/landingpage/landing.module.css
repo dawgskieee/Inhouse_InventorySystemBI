@@ -906,6 +906,37 @@ visibility: visible;
 }
 
 /* ===========================
+MODAL FORM INPUTS
+=========================== */
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.inputGroup label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #475569;
+}
+
+.inputGroup input {
+  height: 44px;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputGroup input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ===========================
 RESPONSIVE
 =========================== */
 
@@ -1009,4 +1040,3 @@ RESPONSIVE
 }
 
 }
-

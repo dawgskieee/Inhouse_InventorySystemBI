@@ -10,6 +10,8 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [checkingSession, setCheckingSession] = useState(true);
 
   useEffect(() => {
@@ -22,23 +24,25 @@ export default function LoginPage() {
   }, []);
 
   const handleLogin = async () => {
-    setError("");
-    try {
-     const response = await api.post("/api/login", {
-        username,
-        password,
-      });
+  setError("");
+  setLoading(true);
+  try {
+    const response = await api.post("/api/login", {
+      username,
+      password,
+    });
 
-      const { token, user } = response.data;
+    const { token, user } = response.data;
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
-      router.push("/User/landingpage");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Login failed");
-    }
-  };
+    router.push("/User/landingpage");
+  } catch (err: any) {
+    setError(err.response?.data?.message || "Login failed");
+    setLoading(false);
+  }
+};
 
   if (checkingSession) {
     return <p style={{ padding: "40px", textAlign: "center" }}>Loading...</p>;
@@ -88,8 +92,8 @@ export default function LoginPage() {
               />
             </div>
 
-            <button className={styles.loginBtn} type="submit">
-              LOG IN
+           <button className={styles.loginBtn} type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "LOG IN"}
             </button>
           </form>
 

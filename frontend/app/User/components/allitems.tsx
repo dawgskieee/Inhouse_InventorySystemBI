@@ -18,8 +18,8 @@ type Props = {
   setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function Table({ searchTerm, setCurrentPage }: Props) {
-  const [recentItems, setRecentItems] = useState<Item[]>([]);
+export default function AllItems({ searchTerm, setCurrentPage }: Props) {
+  const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [showEditModal, setShowEditModal] = useState(false);
@@ -32,7 +32,7 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
   const fetchItems = async () => {
     try {
       const response = await api.get("/items");
-      setRecentItems(response.data);
+      setItems(response.data);
     } catch (err) {
       console.error("Failed to fetch items:", err);
     } finally {
@@ -44,7 +44,7 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
     fetchItems();
   }, []);
 
-  const filteredItems = recentItems.filter((item) => {
+  const filteredItems = items.filter((item) => {
     const term = searchTerm.toLowerCase();
     return (
       item.name.toLowerCase().includes(term) ||
@@ -97,17 +97,25 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
   };
 
   return (
-    <div className={styles.tableCard}>
-      <div className={styles.tableHeader}>
-        <h2>Recent Items</h2>
-        <button onClick={() => setCurrentPage("allItems")}>View all</button>
-      </div>
+    <section className={styles.inventoryContent}>
+     <div className={styles.inventoryHeader} style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+  <div>
+    <h1>All Items</h1>
+    <p>Complete stock list.</p>
+  </div>
+  <button
+    className={styles.editBtn}
+    onClick={() => setCurrentPage("dashboard")}
+  >
+    ← Back to Dashboard
+  </button>
+</div>
 
-      <div className={styles.tableWrapper}>
+      <div className={styles.inventoryTableCard}>
         {loading ? (
           <p style={{ padding: "20px" }}>Loading...</p>
         ) : (
-          <table>
+          <table className={styles.inventoryTable}>
             <thead>
               <tr>
                 <th>SKU</th>
@@ -119,48 +127,54 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
                 <th>Action</th>
               </tr>
             </thead>
-
             <tbody>
-              {filteredItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.sku}</td>
-                  <td>{item.name}</td>
-                  <td>{item.category}</td>
-                  <td>{item.stock}</td>
-                  <td>
-                    <span
-                      className={
-                        item.status === "In Stock"
-                          ? styles.stock
-                          : item.status === "Low Stock"
-                          ? styles.low
-                          : styles.out
-                      }
-                    >
-                      {item.status}
-                    </span>
-                  </td>
-                  <td>{new Date(item.updated_at).toLocaleDateString()}</td>
-                  <td style={{ display: "flex", gap: "8px" }}>
-                    <button className={styles.editBtn} onClick={() => openEdit(item)}>
-                      Edit
-                    </button>
-                    <button
-                      className={styles.editBtn}
-                      style={{ background: "#ef4444" }}
-                      onClick={() => openDeleteConfirm(item.id)}
-                    >
-                      Delete
-                    </button>
+              {filteredItems.length > 0 ? (
+                filteredItems.map((item) => (
+                  <tr key={item.id}>
+                    <td>{item.sku}</td>
+                    <td>{item.name}</td>
+                    <td>{item.category}</td>
+                    <td>{item.stock}</td>
+                    <td>
+                      <span
+                        className={
+                          item.status === "In Stock"
+                            ? styles.stock
+                            : item.status === "Low Stock"
+                            ? styles.low
+                            : styles.out
+                        }
+                      >
+                        {item.status}
+                      </span>
+                    </td>
+                    <td>{new Date(item.updated_at).toLocaleDateString()}</td>
+                    <td style={{ display: "flex", gap: "8px" }}>
+                      <button className={styles.editBtn} onClick={() => openEdit(item)}>
+                        Edit
+                      </button>
+                      <button
+                        className={styles.editBtn}
+                        style={{ background: "#ef4444" }}
+                        onClick={() => openDeleteConfirm(item.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={7} style={{ textAlign: "center", padding: "20px" }}>
+                    No items found.
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         )}
       </div>
 
-      {/* EDIT MODAL */}
       {showEditModal && editingItem && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalCard} style={{ width: 400, textAlign: "left" }}>
@@ -182,17 +196,17 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
                 style={{ background: "#f1f5f9", color: "#1e293b", border: "1px solid #dbe3ec" }}
               />
             </div>
-           <div className={styles.inputGroup}>
-            <label style={{ color: "#334155", textTransform: "none" }}>Category</label>
-            <input
-            value={editingItem.category}
-            onChange={(e) => {
-              const val = e.target.value;
-              const formatted = val.charAt(0).toUpperCase() + val.slice(1);
-              setEditingItem({ ...editingItem, category: formatted });
-            }}
-            style={{ background: "#f1f5f9", color: "#1e293b", border: "1px solid #dbe3ec" }}
-            />
+            <div className={styles.inputGroup}>
+              <label style={{ color: "#334155", textTransform: "none" }}>Category</label>
+              <input
+                value={editingItem.category}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  const formatted = val.charAt(0).toUpperCase() + val.slice(1);
+                  setEditingItem({ ...editingItem, category: formatted });
+                }}
+                style={{ background: "#f1f5f9", color: "#1e293b", border: "1px solid #dbe3ec" }}
+              />
             </div>
             <div className={styles.inputGroup}>
               <label style={{ color: "#334155", textTransform: "none" }}>Stock</label>
@@ -234,7 +248,6 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
         </div>
       )}
 
-      {/* DELETE CONFIRMATION MODAL */}
       {showDeleteModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalCard}>
@@ -251,6 +264,6 @@ export default function Table({ searchTerm, setCurrentPage }: Props) {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }

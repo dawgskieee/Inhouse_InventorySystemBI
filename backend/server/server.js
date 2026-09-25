@@ -12,10 +12,16 @@ app.use(express.json());
 
 
 const itemsRoutes = require("../routes/items");
-app.use("/items", verifyToken, itemsRoutes);
+app.use("/items", verifyToken, itemsRoutes); 
 
 const assetsRoutes = require("../routes/assets");
 app.use("/assets", verifyToken, assetsRoutes);
+
+const usersRoutes = require("../routes/users");
+app.use("/api/users", verifyToken, usersRoutes);
+
+const logsRoutes = require("../routes/logs");
+app.use("/api/logs", verifyToken, logsRoutes);
 
 
 app.post('/api/login', async (req, res) => {

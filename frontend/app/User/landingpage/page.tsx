@@ -6,6 +6,7 @@ import styles from "./landing.module.css";
 
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
+import AllItems from "../components/allitems";
 
 import Dashboard from "../components/dashboard";
 import Cards from "../components/cards";
@@ -15,6 +16,8 @@ import Table from "../components/table";
 import Inventory from "../components/inventory";
 import StoreInventory from "../components/inventory";
 import HeadOffice from "../components/headoffice";
+import Users from "../components/users";
+import Logs from "../components/logs";
 
 export default function Home() {
   const router = useRouter();
@@ -62,7 +65,7 @@ export default function Home() {
             <Dashboard />
             <Cards />
             <Charts />
-            <Table searchTerm={searchTerm} />
+            <Table searchTerm={searchTerm} setCurrentPage={setCurrentPage} />
           </>
         )}
 
@@ -77,6 +80,16 @@ export default function Home() {
         {currentPage === "headOffice" && (
           <HeadOffice />
         )}
+
+        {currentPage === "logs" && (<Logs />
+      )}
+
+        {currentPage === "users" && (
+          <Users />
+          )}
+          {currentPage === "allItems" && (
+  <AllItems searchTerm={searchTerm} setCurrentPage={setCurrentPage} />
+  )}
 
       </main>
 

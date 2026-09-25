@@ -13,51 +13,57 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const isValidUsername = (value: string) => {
-  // Letters, numbers, at underscore lang ang pinapayagan
-  const usernameRegex = /^[a-zA-Z0-9_]+$/;
-  return usernameRegex.test(value);
-};
+    // Letters, numbers, at underscore lang ang pinapayagan
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    return usernameRegex.test(value);
+  };
 
-const isValidEmail = (value: string) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(value);
-};
+  const isValidEmail = (value: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
 
- const handleRegister = async () => {
-  setError("");
-  setSuccess("");
+  const handleRegister = async () => {
+    setError("");
+    setSuccess("");
+    setLoading(true);
 
-  if (!isValidUsername(username)) {
-    setError("Username can only contain letters, numbers, and underscores (no special characters or spaces)");
-    return;
-  }
+    if (!isValidUsername(username)) {
+      setError("Username can only contain letters, numbers, and underscores (no special characters or spaces)");
+      setLoading(false);
+      return;
+    }
 
-  if (!isValidEmail(email)) {
-    setError("Please enter a valid email address");
-    return;
-  }
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
 
-  if (password !== confirmPassword) {
-    setError("Passwords do not match");
-    return;
-  }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      setLoading(false);
+      return;
+    }
 
-  try {
-    await axios.post("http://localhost:5000/api/register", {
-      username,
-      email,
-      password,
-      role: "staff",
-    });
+    try {
+      await api.post("/api/register", {
+        username,
+        email,
+        password,
+        role: "staff",
+      });
 
-    setSuccess("Account created! Redirecting to login...");
-    setTimeout(() => router.push("/"), 1500);
-  } catch (err: any) {
-    setError(err.response?.data?.message || "Registration failed");
-  }
-};
+      setSuccess("Account created! Redirecting to login...");
+      setTimeout(() => router.push("/"), 1500);
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Registration failed");
+      setLoading(false);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -117,14 +123,14 @@ const isValidEmail = (value: string) => {
               />
             </div>
 
-            <button className={styles.loginBtn} type="submit">
-              CREATE ACCOUNT
+            <button className={styles.loginBtn} type="submit" disabled={loading}>
+              {loading ? "Creating account..." : "CREATE ACCOUNT"}
             </button>
           </form>
 
           <p className={styles.signup}>
             Already have an account? <a href="/">Log in</a>
-            </p>
+          </p>
         </div>
       </div>
     </div>

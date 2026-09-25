@@ -101,20 +101,26 @@ return (
 
 </div>
 
-        <a className={styles.navItem}>
-            <span>⇄</span>
-            Transactions
-        </a>
 
-        <a className={styles.navItem}>
-            <span>👥</span>
-            Users
-        </a>
+        <div
+    className={`${styles.navItem} ${
+        currentPage === "users" ? styles.active : ""
+    }`}
+    onClick={() => setCurrentPage("users")}
+>
+    <span>👥</span>
+    Users
+    </div>
 
-        <a className={styles.navItem}>
-            <span>📝</span>
-            Logs
-        </a>
+       <div
+    className={`${styles.navItem} ${
+        currentPage === "logs" ? styles.active : ""
+    }`}
+    onClick={() => setCurrentPage("logs")}
+    >
+    <span>📝</span>
+    Logs
+    </div>
         </nav>
 
         <div className={styles.profile}>
